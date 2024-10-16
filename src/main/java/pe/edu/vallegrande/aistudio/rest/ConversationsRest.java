@@ -1,4 +1,5 @@
 package pe.edu.vallegrande.aistudio.rest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import pe.edu.vallegrande.aistudio.model.ConversationsModel;
@@ -13,57 +14,70 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/service/conversation")
 public class ConversationsRest {
+
     private final ConversationsService conversationsService;
 
     @Autowired
-    public ConversationsRest(ConversationsService conversationsService){
+    public ConversationsRest(ConversationsService conversationsService) {
         this.conversationsService = conversationsService;
     }
 
+   // Obtener todas las conversaciones
     @GetMapping
-    public Flux<ConversationsModel> findAll(){
+    public Flux<ConversationsModel> getAllConversations() {
+        log.info("Solicitando todas las conversaciones");
         return conversationsService.findAll();
     }
-
+    
+    // Obtener una conversación por ID
     @GetMapping("/id/{conversation_id}")
-    public Mono<ConversationsModel> findById(@PathVariable Long conversation_id){
-        return conversationsService.findById(conversation_id);
+    public Mono<ResponseEntity<ConversationsModel>> getConversationById(@PathVariable Long conversation_id) {
+        log.info("Solicitando conversación con ID: " + conversation_id);
+        return conversationsService.findById(conversation_id)
+                .map(conversation -> new ResponseEntity<>(conversation, HttpStatus.OK))
+                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    // Obtener conversaciones por estado
     @GetMapping("/active/{active}")
-    public Flux<ConversationsModel> findByActive(@PathVariable String active) { return conversationsService.findByActive(active); }
-
+    public Flux<ConversationsModel> getConversationsByActive(@PathVariable String active) {
+        log.info("Solicitando conversaciones con estado: " + active);
+        return conversationsService.findByActive(active);
+    }
+    
     @PostMapping("/save")
-    public Mono<ResponseEntity<ConversationsModel>> createConversation(@RequestBody(required = false) ConversationsModel conversation) {
-        // Si el cuerpo es null, crea una nueva instancia con valores predeterminados
-        if (conversation == null) {
-            conversation = new ConversationsModel();
-        }
-
-        return conversationsService.insertConversation(conversation)
-                .map(newConversation -> new ResponseEntity<>(newConversation, HttpStatus.CREATED))
-                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+   public Mono<ConversationsModel> createConversation(@RequestBody ConversationsModel conversation) {
+        log.info("Creando una nueva conversación");
+        return conversationsService.insertConversation(conversation);
     }
 
+   // Actualizar una conversación existente
     @PutMapping("/update/{conversation_id}")
     public Mono<ResponseEntity<ConversationsModel>> updateConversation(
-            @PathVariable Long conversation_id,
-            @RequestBody ConversationsModel conversation) {
-        return conversationsService.updateConversation(conversation_id, conversation);
+            @PathVariable Long conversation_id, @RequestBody ConversationsModel updatedConversation) {
+        log.info("Actualizando conversación con ID: " + conversation_id);
+        return conversationsService.updateConversation(conversation_id, updatedConversation);
     }
 
-    @PostMapping("/delete/{conversation_id}")
-    public Mono<ResponseEntity<ConversationsModel>> delete(@PathVariable Long conversation_id) { return conversationsService.delete(conversation_id); }
-
-    @PostMapping("/restore/{conversation_id}")
-    public Mono<ResponseEntity<ConversationsModel>> restore(@PathVariable Long conversation_id){ return conversationsService.restore(conversation_id); }
-
+    // Eliminar lógicamente una conversación
     @DeleteMapping("/delete/{conversation_id}")
-    public Mono<ResponseEntity<Object>> deleteConversationPermanently(@PathVariable Long conversation_id) {
-        return conversationsService.deleteConversationPermanently(conversation_id)
-                .then(Mono.just(new ResponseEntity<>(HttpStatus.NO_CONTENT)))  // Devuelve 204 al eliminar exitosamente
-                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));    // En caso de error, devuelve 404
+    public Mono<ResponseEntity<ConversationsModel>> deleteConversation(@PathVariable Long conversation_id) {
+        log.info("Eliminando conversación con ID: " + conversation_id);
+        return conversationsService.delete(conversation_id);
     }
 
+   // Restaurar una conversación
+    @PutMapping("/restore/{conversation_id}")
+    public Mono<ResponseEntity<ConversationsModel>> restoreConversation(@PathVariable Long conversation_id) {
+        log.info("Restaurando conversación con ID: " + conversation_id);
+        return conversationsService.restore(conversation_id);
+    }
+
+    // Eliminar físicamente una conversación
+    @DeleteMapping("/permanent/{conversation_id}")
+    public Mono<Void> deleteConversationPermanently(@PathVariable Long conversation_id) {
+        log.info("Eliminando físicamente la conversación con ID: " + conversation_id);
+        return conversationsService.deleteConversationPermanently(conversation_id);
+    }
 
 }
