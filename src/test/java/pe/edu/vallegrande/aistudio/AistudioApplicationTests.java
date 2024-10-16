@@ -8,8 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootTest
 class AistudioApplicationTests {
 
-    @Test
-    void contextLoads() {
-        log.info("El contexto de la aplicación se cargó correctamente.");
-    }
+  @Test
+	void contextLoads() {
+	    log.info("default test");
+	}
+
 }
