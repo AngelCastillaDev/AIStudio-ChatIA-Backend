@@ -17,6 +17,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
+          distribution: 'adopt'  # O puedes usar 'temurin' si prefieres
 
       - name: Build with Maven
         run: mvn clean package  # Asegúrate de que este comando se adapte a tu proyecto
