@@ -1,16 +1,22 @@
 name: Publish to Docker/DockerHub
+
 on:
   push:
     branches:
       - develop
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Check out source code
         uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
 
       - name: Build with Maven
         run: mvn clean package  # Asegúrate de que este comando se adapte a tu proyecto
@@ -33,7 +39,12 @@ jobs:
       - name: Build and Push to Docker Hub
         uses: docker/build-push-action@v2
         with:
+          context: .  # Define el contexto de construcción
+          file: Dockerfile  # Asegúrate de que el archivo Dockerfile esté en la raíz del repositorio
           push: true
           tags: |
             ${{ secrets.DOCKER_HUB_NAMESPACE }}/backend:latest
-            ${{ secrets.DOCKER_HUB_NAMESPACE }}/backend:latest
+            ${{ secrets.DOCKER_HUB_NAMESPACE }}/backend:${{ env.version }}
+
+      - name: Clean up
+        run: docker system prune -af  # Opcional, limpia el sistema Docker
