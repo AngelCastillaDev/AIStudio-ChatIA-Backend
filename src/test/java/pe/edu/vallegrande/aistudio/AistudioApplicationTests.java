@@ -2,15 +2,14 @@ package pe.edu.vallegrande.aistudio;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import lombok.extern.slf4j.slf4j;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootTest
 class AistudioApplicationTests {
 
-	@Test
-	void contextLoads() {
-		log.info("Default test");
-	}
-
+    @Test
+    void contextLoads() {
+        log.info("El contexto de la aplicación se cargó correctamente.");
+    }
 }
