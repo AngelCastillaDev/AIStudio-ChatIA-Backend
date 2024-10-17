@@ -10,7 +10,7 @@ class AistudioApplicationTests {
 
   @Test
 	void contextLoads() {
-	    log.info("default test");
+	    log.info("Github Actions");
 	}
 
 }
