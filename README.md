@@ -1,4 +1,4 @@
-# AIStudio.ChatIA-Backend
+# AIStudio-ChatIA-Backend
 # AISTUDIO
 ![image](https://github.com/user-attachments/assets/60846cfd-34ab-4978-80a7-a9f794f811ba)
 
