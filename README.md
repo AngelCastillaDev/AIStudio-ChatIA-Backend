@@ -22,22 +22,19 @@ En este informe, aprenderás cómo configurar y utilizar la API de Gemini en AI 
    - Visita [AI Studio](https://ai.google.dev/aistudio?hl=es-419).
    - Inicia sesión con tu cuenta de Google.
 
-  ![image](https://github.com/user-attachments/assets/3763ece1-af21-47fc-9b0f-707a6a19c858)
-
+  <img width="1113" height="514" alt="image" src="https://github.com/user-attachments/assets/718abba2-471e-4715-8dd3-ea92d2f49ae3" />
 
 2. **Obtén una Clave de API:**
    - Dentro de AI Studio, navega a la sección "Obtén una clave de API de Gemini".
 
-   ![image](https://github.com/user-attachments/assets/90da96ea-5de0-452e-b345-baec2c2e86c9)
-
+  <img width="1059" height="371" alt="image" src="https://github.com/user-attachments/assets/047f71f9-e0ab-4cfb-baca-ca49ce05eb1d" />
 
 3. **Crea una Clave de API:**
    - Selecciona "Crear una clave de API".
    - Elige uno de tus proyectos de Google Cloud con acceso a escritura existente.
    - Haz clic en "Crear clave de API en un proyecto existente".
 
-   ![image](https://github.com/user-attachments/assets/059383aa-2d19-44fc-ba6d-e768234deb25)
-
+  <img width="1078" height="535" alt="image" src="https://github.com/user-attachments/assets/17e62407-e47f-496f-aaba-824dd6016572" />
 
 4. **Obtén la Clave de API:**
    - Después de crear la clave, se mostrará en la interfaz de AI Studio.
@@ -51,8 +48,7 @@ En este informe, aprenderás cómo configurar y utilizar la API de Gemini en AI 
 1. **Crea una Solicitud POST en Postman:**
    - Abre Postman y crea una nueva solicitud POST.
 
-   ![image](https://github.com/user-attachments/assets/394e684d-d735-4844-adba-fa26c245caff)
-
+  <img width="1071" height="456" alt="image" src="https://github.com/user-attachments/assets/b0f75aaa-286e-4274-80bb-5168cc9742d1" />
 
 2. **Configura la URL y los Headers:**
    - En la URL, ingresa el siguiente endpoint, reemplazando `YOUR_API_KEY` con la clave de API que obtuviste:
